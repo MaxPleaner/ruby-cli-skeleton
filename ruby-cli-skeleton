@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# -------------------------
+# Gem dependencies
+# -------------------------
 require 'readline'
 require 'ripl'
 require 'ripl/multi_line'
@@ -7,28 +10,38 @@ require 'ripl/auto_indent'
 require 'ripl/shell_commands'
 require 'ripl/color_streams'
 require 'ripl/irb'
-
 require 'optparse'
 require "method_source"
-
 require 'colored'
 require "awesome_print"
 
+#-------------------------
+# define the source for commands
+#-------------------------
 # use lib/commands.rb as the source for the COMMANDS_CLASS constant
 COMMANDS_FILE = "lib/commands.rb"
 require_relative COMMANDS_FILE
-# define lib/commands.rb as the source for custom commands
+# Set a variable equaling the class which is loaded from COMMANDS_FILE
 COMMANDS_CLASS = Commands
 
-
+#---------------------------
+# the CLI base
+#---------------------------
 # intance methods in RubyCliSkeleton and COMMANDS_CLASS are available in the cli
 class RubyCliSkeleton < COMMANDS_CLASS
-  # more commands are defined in lib/tmsu_ruby.rb
+  # more commands are defined in lib/commands.rb
+  def no_help_methods
+    # list of methods which are ignored when the "help" command lists all methods
+    [:no_help_methods, :print_and_return]
+  end
   def print_and_return(obj)
+    # a helper method (used by other commands)
     ap obj
     return obj
   end
   def initialize(options)
+    # these options are from OptionParser
+    # pass them along to COMMAND_CLASS's initialize
     super(options)
   end
   def ls(dir=".")
@@ -43,7 +56,10 @@ class RubyCliSkeleton < COMMANDS_CLASS
     return Dir.glob("./*")
   end
   def help(method_name=nil)
+    # If a method_name is given as an argument, show the source for that method
+    # Otherwise, list all the methods
     if method_name
+      # get the source using the "method_source" gem
       method_source = self.class.instance_method(method_name.to_sym).source rescue nil
       if method_source.nil?
         puts "method not found".red 
@@ -53,9 +69,8 @@ class RubyCliSkeleton < COMMANDS_CLASS
       end
     else
       puts "You can see details for a method with 'help(:method_name)'".yellow
-      print_and_return(
-        [COMMANDS_CLASS, self.class].map { |klass| klass.instance_methods(false) }.flatten
-      )
+      methods = [COMMANDS_CLASS, self.class].map { |klass| klass.instance_methods(false) }.flatten
+      print_and_return(methods - no_help_methods)
     end
   end
 end

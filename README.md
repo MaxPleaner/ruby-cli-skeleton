@@ -17,12 +17,13 @@ How to use:
     on `COMMANDS_CLASS` accepts an options hash.
   - `OptionParser` can be used in `ruby-cli-skeleton`, read [the docs](http://ruby-doc.org/stdlib-2.3.0/libdoc/optparse/rdoc/OptionParser.html)
     for more info.
+  - Add a method's name to `no_help_methods` to prevent the `help` command from listing it
 4. After customizing, open the `ruby-cli-skeleton` executable to start the program
 
 What kind of helpers does this provide:
   - The `help` command (with no arguments) will print out all the methods available to the CLI.
     It does this using `instance_methods(false)` on `RubyCliSkeleton` and `COMMANDS_CLASS`, so
-    once a method is defined, it will be included here. 
+    once a method is defined, it will be included here (unless it's included in `no_help_methods`)
   - The `help` command (when given a method name as an argument) will print out the
     source code for the method. It does this using the [method_source](https://github.com/banister/method_source) gem
   - [awesome_print](https://github.com/michaeldv/awesome_print/) and [colored](https://github.com/defunkt/colored) are installed for pretty printing / colors.
