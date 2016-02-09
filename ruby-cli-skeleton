@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-# -------------------------
+#---------------------------------------------------------------------------------------------------------------------
 # Gem dependencies
-# -------------------------
+#---------------------------------------------------------------------------------------------------------------------
 require 'readline'
 require 'ripl'
 require 'ripl/multi_line'
@@ -15,18 +15,18 @@ require "method_source"
 require 'colored'
 require "awesome_print"
 
-#-------------------------
+#---------------------------------------------------------------------------------------------------------------------
 # define the source for commands
-#-------------------------
+#---------------------------------------------------------------------------------------------------------------------
 # use lib/commands.rb as the source for the COMMANDS_CLASS constant
 COMMANDS_FILE = "lib/commands.rb"
 require_relative COMMANDS_FILE
 # Set a variable equaling the class which is loaded from COMMANDS_FILE
 COMMANDS_CLASS = Commands
 
-#---------------------------
+#---------------------------------------------------------------------------------------------------------------------
 # the CLI base
-#---------------------------
+#---------------------------------------------------------------------------------------------------------------------
 # intance methods in RubyCliSkeleton and COMMANDS_CLASS are available in the cli
 class RubyCliSkeleton < COMMANDS_CLASS
   # more commands are defined in lib/commands.rb
@@ -75,13 +75,18 @@ class RubyCliSkeleton < COMMANDS_CLASS
   end
 end
 
-# parse command line options
-# although none are accepted yet
+#---------------------------------------------------------------------------------------------------------------------
+# Parse command line options
+#---------------------------------------------------------------------------------------------------------------------
+# none are accepted by default. See http://ruby-doc.org/stdlib-2.3.0/libdoc/optparse/rdoc/OptionParser.html
 $options = {}
 OptionParser.new do |o|
   o.banner = "Usage: ruby cli.rb (no options accepted)"
   o.parse!
 end
 
+#---------------------------------------------------------------------------------------------------------------------
+# Start the program
+#---------------------------------------------------------------------------------------------------------------------
 # start REPL with access to RubyCliSkeleton instance methods
 Ripl.start(binding: RubyCliSkeleton.new($options).instance_eval{ binding })
