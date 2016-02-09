@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+
+require 'readline'
+require 'ripl'
+require 'ripl/multi_line'
+require 'ripl/auto_indent'
+require 'ripl/shell_commands'
+require 'ripl/color_streams'
+require 'ripl/irb'
+
+require 'optparse'
+require "method_source"
+
+require 'colored'
+require "awesome_print"
+
+# use lib/commands.rb as the source for the COMMANDS_CLASS constant
+COMMANDS_FILE = "lib/commands.rb"
+require_relative COMMANDS_FILE
+# define lib/commands.rb as the source for custom commands
+COMMANDS_CLASS = Commands
+
+
+# intance methods in RubyCliSkeleton and COMMANDS_CLASS are available in the cli
+class RubyCliSkeleton < COMMANDS_CLASS
+  # more commands are defined in lib/tmsu_ruby.rb
+  def print_and_return(obj)
+    ap obj
+    return obj
+  end
+  def initialize(options)
+    super(options)
+  end
+  def ls(dir=".")
+    res = `ls`
+    puts "#{res} \n#{"just a reminder - this is ruby not shell".yellow}"
+    return Dir.glob("#{dir}/*")
+  end
+  def pwd
+    res = `pwd`
+    puts "#{res} \n#{"just a reminder - this is ruby not shell".yellow}"
+    return res.chomp
+    return Dir.glob("./*")
+  end
+  def help(method_name=nil)
+    if method_name
+      method_source = self.class.instance_method(method_name.to_sym).source rescue nil
+      if method_source.nil?
+        puts "method not found".red 
+      else
+        method_source.display
+        return method_name.to_sym
+      end
+    else
+      puts "You can see details for a method with 'help(:method_name)'".yellow
+      print_and_return(
+        [COMMANDS_CLASS, self.class].map { |klass| klass.instance_methods(false) }.flatten
+      )
+    end
+  end
+end
+
+# parse command line options
+# although none are accepted yet
+$options = {}
+OptionParser.new do |o|
+  o.banner = "Usage: ruby cli.rb (no options accepted)"
+  o.parse!
+end
+
+# start REPL with access to RubyCliSkeleton instance methods
+Ripl.start(binding: RubyCliSkeleton.new($options).instance_eval{ binding })
