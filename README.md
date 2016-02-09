@@ -11,17 +11,17 @@ How to use:
     on the `RubyCliSkeleton` class and any class it inherits from.
   - Commands are simple to write. You can print something, return some value
     (this is a REPL), or just return nil.
-  - Custom commands are written in lib/commands.rb
-  - If renaming the class/file in lib/commands.rb, also change the `COMMANDS_CLASS`
+  - Custom commands are written in `lib/commands.rb`
+  - If renaming the class/file in `lib/commands.rb`, also change the `COMMANDS_CLASS`
     and `COMMANDS_FILE` constants in `ruby-cli-skeleton`. Make sure the `initialize` method
-    on COMMANDS_CLASS accepts an options hash.
+    on `COMMANDS_CLASS` accepts an options hash.
   - `OptionParser` can be used in `ruby-cli-skeleton`, read [the docs](http://ruby-doc.org/stdlib-2.3.0/libdoc/optparse/rdoc/OptionParser.html)
     for more info.
 4. After customizing, open the `ruby-cli-skeleton` executable to start the program
 
 What kind of helpers does this provide:
   - The `help` command (with no arguments) will print out all the methods available to the CLI.
-    It does this using `instance_methods(false)` on RubyCliSkeleton and COMMANDS_CLASS, so
+    It does this using `instance_methods(false)` on `RubyCliSkeleton` and `COMMANDS_CLASS`, so
     once a method is defined, it will be included here. 
   - The `help` command (when given a method name as an argument) will print out the
     source code for the method. It does this using the [method_source](https://github.com/banister/method_source) gem
