@@ -29,3 +29,18 @@ What kind of helpers does this provide:
   - [awesome_print](https://github.com/michaeldv/awesome_print/) and [colored](https://github.com/defunkt/colored) are installed for pretty printing / colors.
   - Some ripl plugins are installed. `ripl-shell_commands` enables any shell method to be run in the CLI by prepending a bang ("!").
     For example, `!echo true` will print `true`.
+
+
+#### Another thing
+
+Since this is a REPL, it can't be piped in Bash without issing it an exit command.
+
+```bash
+$ (echo "print 'hello world'"; echo "exit") | ./ruby-cli-skeleton | grep hello
+```
+
+This does a couple thigns:
+  - combines multiple `echo` calls into a single output by wrapping them in parens and separating them using semicolons.
+  - issues ruby commands via `echo`, including one for `exit` which is necessary.
+  - pipes the `echo` to the cli script, and pipes the script output to `grep`, searching the text. 
+
