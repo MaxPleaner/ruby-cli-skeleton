@@ -18,6 +18,7 @@ How to use:
   - `OptionParser` can be used in `ruby-cli-skeleton`, read [the docs](http://ruby-doc.org/stdlib-2.3.0/libdoc/optparse/rdoc/OptionParser.html)
     for more info.
   - Add a method's name to `no_help_methods` to prevent the `help` command from listing it
+  - Customize the database in lib/db_setup.rb. A `Todo` ActiveRecord model is already defined.
 4. After customizing, open the `ruby-cli-skeleton` executable to start the program
 
 What kind of helpers does this provide:
