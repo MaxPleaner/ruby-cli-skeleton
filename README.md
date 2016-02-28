@@ -4,11 +4,12 @@ How to use:
 
 1. Clone repo
 2. run `bundle install`
-3. Customize the `ruby-cli-skeleton` file.
-  - The CLI is all set up and ready to use, it just lacks commands.
+3. Customize the `lib/commands.rb` file and (optionally) the `ruby-cli-skeleton` file.
+  - `ruby-cli-skeleton` has the base CLI which is all set up and ready to use, but lacks useful commands.
   - Some commands are already defined, like `help`, `ls`, and `pwd`.
   - The commands available in the CLI are the instance methods
     on the `RubyCliSkeleton` class and any class it inherits from.
+    By default, it inherits from the `Commands` class in `lib/commands.rb`
   - Commands are simple to write. You can print something, return some value
     (this is a REPL), or just return nil.
   - Custom commands are written in `lib/commands.rb`
@@ -18,7 +19,8 @@ How to use:
   - `OptionParser` can be used in `ruby-cli-skeleton`, read [the docs](http://ruby-doc.org/stdlib-2.3.0/libdoc/optparse/rdoc/OptionParser.html)
     for more info.
   - Add a method's name to `no_help_methods` to prevent the `help` command from listing it
-  - Customize the database in lib/db_setup.rb. A `Todo` ActiveRecord model is already defined.
+  - Customize the database in `lib/db_setup.rb`, including migrating and models.
+    A `Todo` ActiveRecord model is already defined.
 4. After customizing, open the `ruby-cli-skeleton` executable to start the program
 
 What kind of helpers does this provide:
