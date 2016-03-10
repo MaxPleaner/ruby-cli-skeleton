@@ -33,6 +33,9 @@ What kind of helpers does this provide:
   - Some ripl plugins are installed. `ripl-shell_commands` enables any shell method to be run in the CLI by prepending a bang ("!").
     For example, `!echo true` will print `true`.
 
+Update:
+  - This now includes a sample ActiveRecord database setup, see `lib/db_setup.rb`
+
 
 #### Another thing
 
