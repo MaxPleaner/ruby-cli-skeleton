@@ -1,6 +1,12 @@
 This is a ruby CLI skeleton using [ripl](https://github.com/cldwalker/ripl).
 
-How to use:
+### TL;DR howto:
+
+- Add methods to `lib/commands.rb`
+- run `ruby-cli-skeleton` executable
+- read comments in code
+
+### More detailed howto:
 
 1. Clone repo
 2. run `bundle install`
