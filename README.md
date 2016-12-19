@@ -1,4 +1,3 @@
-[![git-brag-stats](https://labs.turbo.run/git-brag?user=maxleaner&repo=ruby-cli-skeleton&maxn=7)](https://github.com/turbo/git-brag)
 
 This is a ruby CLI skeleton using [ripl](https://github.com/cldwalker/ripl).
 
